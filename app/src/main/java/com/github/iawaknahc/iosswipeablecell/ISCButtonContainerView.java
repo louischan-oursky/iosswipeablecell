@@ -30,13 +30,10 @@ public class ISCButtonContainerView extends ViewGroup {
     }
 
     protected void inheritBackgroundColor() {
-
         Drawable buttonBackground = this.mButtonView.getBackground();
         if (buttonBackground instanceof ColorDrawable) {
             ColorDrawable colorDrawable = (ColorDrawable) buttonBackground;
-            // FIXME
-//            this.setBackgroundColor(colorDrawable.getColor());
-            this.setBackgroundColor(0xFF_FF_00_00);
+            this.setBackgroundColor(colorDrawable.getColor());
         }
     }
 
@@ -46,7 +43,7 @@ public class ISCButtonContainerView extends ViewGroup {
         int height = MeasureSpec.getSize(heightMeasureSpec);
         this.mButtonView.measure(
                 MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
-                MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
+                MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
         );
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }

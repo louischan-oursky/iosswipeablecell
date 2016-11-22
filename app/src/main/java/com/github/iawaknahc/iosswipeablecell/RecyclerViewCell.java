@@ -17,8 +17,8 @@ public class RecyclerViewCell extends ViewGroup {
         this.addView(this.mTextView);
     }
 
-    public void bindPosition(int position) {
-        this.mTextView.setText(Integer.toString(position));
+    public void bindContent(String content) {
+        this.mTextView.setText(content);
     }
 
     @Override

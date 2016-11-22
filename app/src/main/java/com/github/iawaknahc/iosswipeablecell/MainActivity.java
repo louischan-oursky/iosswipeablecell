@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         RecyclerView recyclerView = new RecyclerView(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter();
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(recyclerView);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(

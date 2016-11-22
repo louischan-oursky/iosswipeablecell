@@ -12,8 +12,8 @@ public class RecyclerViewViewHolder extends RecyclerView.ViewHolder {
         this.mCell = itemView;
     }
 
-    public void bindView(int position) {
-        this.mCell.getContentView().bindPosition(position);
+    public void bindView(String content) {
+        this.mCell.getContentView().bindContent(content);
     }
 
 }
