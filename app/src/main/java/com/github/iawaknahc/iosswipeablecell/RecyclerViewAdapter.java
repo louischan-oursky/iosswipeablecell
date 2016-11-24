@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewViewHolder> implements View.OnClickListener, ISCCellView.ISOCellViewDelegate<RecyclerViewCell> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewViewHolder> implements View.OnClickListener, ISCCellView.ISCCellViewActionDelegate<RecyclerViewCell> {
 
     private static final String LOG_TAG = "RecyclerViewAdapter";
 
@@ -42,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewViewHo
 
         // cellView
         ISCCellView<RecyclerViewCell> view = new ISCCellView<>(mRecyclerView, contentView, archiveButton);
-        view.setDelegate(this);
+        view.setActionDelegate(this);
 
         // holder
         RecyclerViewViewHolder holder = new RecyclerViewViewHolder(view);

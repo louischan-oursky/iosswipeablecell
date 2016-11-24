@@ -18,7 +18,7 @@ import android.view.animation.LinearInterpolator;
 
 public class ISCCellView<ContentView extends View> extends ViewGroup implements Animator.AnimatorListener, View.OnClickListener {
 
-    public interface ISOCellViewDelegate<ContentView extends View> {
+    public interface ISCCellViewActionDelegate<ContentView extends View> {
         void onWillSwipeFromRightToLeft(ISCCellView<ContentView> cellView);
         void onDidSwipeFromRightToLeft(ISCCellView<ContentView> cellView);
     }
@@ -26,7 +26,7 @@ public class ISCCellView<ContentView extends View> extends ViewGroup implements 
     private static final String LOG_TAG = "ISCCellView";
 
     // delegate
-    protected ISOCellViewDelegate<ContentView> mDelegate;
+    protected ISCCellViewActionDelegate<ContentView> mActionDelegate;
 
     // views
     protected RecyclerView mRecyclerView;
@@ -115,8 +115,8 @@ public class ISCCellView<ContentView extends View> extends ViewGroup implements 
         return this.mContentView;
     }
 
-    public void setDelegate(ISOCellViewDelegate delegate) {
-        this.mDelegate = delegate;
+    public void setActionDelegate(ISCCellViewActionDelegate delegate) {
+        this.mActionDelegate = delegate;
     }
     // public apis
 
@@ -376,8 +376,8 @@ public class ISCCellView<ContentView extends View> extends ViewGroup implements 
 
     protected void settleToStage2(float translateX) {
         // FIXME: handle direction
-        if (mDelegate != null) {
-            mDelegate.onWillSwipeFromRightToLeft(this);
+        if (mActionDelegate != null) {
+            mActionDelegate.onWillSwipeFromRightToLeft(this);
         }
 
         this.cancelOngoingTransition();
@@ -446,8 +446,8 @@ public class ISCCellView<ContentView extends View> extends ViewGroup implements 
             mTouchState = TouchStatePossible;
             mSwipeProcess = SwipeProcessStage0;
             if (mOngoingTransition == TransitionSettlingStage2) {
-                if (mDelegate != null) {
-                    mDelegate.onDidSwipeFromRightToLeft(this);
+                if (mActionDelegate != null) {
+                    mActionDelegate.onDidSwipeFromRightToLeft(this);
                 }
                 this.mContentView.setTranslationX(0);
                 this.mButtonContainerViewRightFirst.setTranslationX(0);
