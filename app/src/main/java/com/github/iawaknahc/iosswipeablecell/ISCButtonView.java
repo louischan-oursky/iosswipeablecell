@@ -6,31 +6,33 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ISCButtonContainerView extends ViewGroup {
+public class ISCButtonView extends ViewGroup {
 
     public static final int AlignLeft = 1;
     public static final int AlignRight = 2;
 
     protected int mAlign;
-    protected View mButtonView;
+    protected View mView;
 
-    public ISCButtonContainerView(@NonNull View buttonView, int align) {
+    public ISCButtonView(@NonNull View buttonView, int align) {
         super(buttonView.getContext());
-        this.mAlign = AlignLeft;
-        this.mButtonView = buttonView;
-        this.addView(this.mButtonView);
+        this.mView = buttonView;
+
+        this.addView(this.mView);
         this.setAlign(align);
-        inheritBackgroundColor();
+        this.inheritBackgroundColor();
     }
 
     protected void setAlign(int align) {
         if (align == AlignLeft || align == AlignRight) {
             this.mAlign = align;
+        } else {
+            this.mAlign = AlignLeft;
         }
     }
 
     protected void inheritBackgroundColor() {
-        Drawable buttonBackground = this.mButtonView.getBackground();
+        Drawable buttonBackground = this.mView.getBackground();
         if (buttonBackground instanceof ColorDrawable) {
             ColorDrawable colorDrawable = (ColorDrawable) buttonBackground;
             this.setBackgroundColor(colorDrawable.getColor());
@@ -41,7 +43,7 @@ public class ISCButtonContainerView extends ViewGroup {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
-        this.mButtonView.measure(
+        this.mView.measure(
                 MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
                 MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
         );
@@ -53,8 +55,8 @@ public class ISCButtonContainerView extends ViewGroup {
         int width = right - left;
         int height = bottom - top;
 
-        int childWidth = this.mButtonView.getMeasuredWidth();
-        int childHeight = this.mButtonView.getMeasuredHeight();
+        int childWidth = this.mView.getMeasuredWidth();
+        int childHeight = this.mView.getMeasuredHeight();
 
         int childTop = (height - childHeight) / 2;
         int childBottom = childTop + childHeight;
@@ -68,6 +70,6 @@ public class ISCButtonContainerView extends ViewGroup {
             childRight = width;
             childLeft = width - childWidth;
         }
-        this.mButtonView.layout(childLeft, childTop, childRight, childBottom);
+        this.mView.layout(childLeft, childTop, childRight, childBottom);
     }
 }

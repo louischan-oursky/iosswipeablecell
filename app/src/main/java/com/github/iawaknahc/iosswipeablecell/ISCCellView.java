@@ -32,7 +32,7 @@ public class ISCCellView<ContentView extends View> extends ViewGroup implements 
     protected RecyclerView mRecyclerView;
     protected RecyclerView.OnScrollListener mOnScrollListener;
     protected ContentView mContentView;
-    protected ISCButtonContainerView mButtonContainerViewRightFirst;
+    protected ISCButtonView mButtonContainerViewRightFirst;
     protected View mButtonRightFirst;
     // views
 
@@ -99,9 +99,9 @@ public class ISCCellView<ContentView extends View> extends ViewGroup implements 
         this.mTimeInterpolator = new LinearInterpolator();
 
         this.mButtonRightFirst = buttonRightFirst;
-        this.mButtonContainerViewRightFirst = new ISCButtonContainerView(
+        this.mButtonContainerViewRightFirst = new ISCButtonView(
                 this.mButtonRightFirst,
-                ISCButtonContainerView.AlignLeft
+                ISCButtonView.AlignLeft
         );
         this.mButtonRightFirst.setOnClickListener(this);
         this.addView(this.mButtonContainerViewRightFirst);
