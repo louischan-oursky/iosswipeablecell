@@ -16,4 +16,8 @@ public class RecyclerViewViewHolder extends RecyclerView.ViewHolder {
         this.mCell.getContentView().bindContent(content);
     }
 
+    public ISCCellView<RecyclerViewCell> getCell() {
+        return this.mCell;
+    }
+
 }

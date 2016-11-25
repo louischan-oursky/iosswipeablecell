@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RecyclerView recyclerView = new RecyclerView(this);
+        recyclerView.setBackgroundColor(0xFF_C9_2E_2E);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(recyclerView);
         recyclerView.setLayoutManager(layoutManager);

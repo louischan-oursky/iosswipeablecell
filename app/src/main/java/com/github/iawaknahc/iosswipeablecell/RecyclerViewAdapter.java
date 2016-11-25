@@ -32,16 +32,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewViewHo
         RecyclerViewCell contentView = new RecyclerViewCell(parent.getContext());
         contentView.setOnClickListener(this);
 
-        // rightButtonFirst
-        TextView archiveButton = new TextView(mRecyclerView.getContext());
-        archiveButton.setPadding(10, 10, 10, 10);
-        archiveButton.setGravity(Gravity.CENTER);
-        archiveButton.setText("Archive");
-        archiveButton.setTextColor(0xFF_FF_FF_FF);
-        archiveButton.setBackgroundColor(0xFF_00_00_FF);
+
 
         // cellView
-        ISCCellView<RecyclerViewCell> view = new ISCCellView<>(mRecyclerView, contentView, archiveButton);
+        ISCCellView<RecyclerViewCell> view = new ISCCellView<>(mRecyclerView, contentView);
         view.setActionDelegate(this);
 
         // holder
@@ -52,6 +46,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewViewHo
     @Override
     public void onBindViewHolder(RecyclerViewViewHolder holder, int position) {
         String content = Integer.toString(mData.get(position));
+        ArrayList<View> rightButtons = new ArrayList<>();
+
+        // rightButtonFirst
+        TextView archiveButton = new TextView(mRecyclerView.getContext());
+        archiveButton.setPadding(10, 10, 10, 10);
+        archiveButton.setGravity(Gravity.CENTER);
+        archiveButton.setText("Archive");
+        archiveButton.setTextColor(0xFF_FF_FF_FF);
+        archiveButton.setBackgroundColor(0xFF_00_00_FF);
+        rightButtons.add(archiveButton);
+
+        TextView moreButton = new TextView(mRecyclerView.getContext());
+        moreButton.setPadding(10, 10, 10, 10);
+        moreButton.setGravity(Gravity.CENTER);
+        moreButton.setText("More");
+        moreButton.setTextColor(0xFF_FF_FF_FF);
+        moreButton.setBackgroundColor(0xFF_00_FF_00);
+        rightButtons.add(moreButton);
+
+        holder.getCell().setRightButtons(rightButtons);
         holder.bindView(content);
     }
 
@@ -66,17 +80,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewViewHo
     }
 
     @Override
-    public void onWillSwipeFromRightToLeft(ISCCellView<RecyclerViewCell> cellView) {
+    public void onDidSwipeFromRightToLeft(ISCCellView<RecyclerViewCell> cellView) {
         int adapterPosition = mRecyclerView.getChildAdapterPosition(cellView);
-        Log.d(LOG_TAG, "onWillSwipeFromRightToLeft " + adapterPosition);
         if (adapterPosition != RecyclerView.NO_POSITION) {
             mData.remove(adapterPosition);
             this.notifyItemRemoved(adapterPosition);
         }
-    }
-
-    @Override
-    public void onDidSwipeFromRightToLeft(ISCCellView<RecyclerViewCell> cellView) {
-
     }
 }

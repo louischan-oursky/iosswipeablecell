@@ -11,13 +11,17 @@ public class ISCButtonView extends ViewGroup {
     public static final int AlignLeft = 1;
     public static final int AlignRight = 2;
 
+    public static final int PositionLeft = 1;
+    public static final int PositionRight = 2;
+
     protected int mAlign;
     protected View mView;
+    protected int mOrder;
 
-    public ISCButtonView(@NonNull View buttonView, int align) {
+    public ISCButtonView(@NonNull View buttonView, int align, int order) {
         super(buttonView.getContext());
         this.mView = buttonView;
-
+        this.mOrder = order;
         this.addView(this.mView);
         this.setAlign(align);
         this.inheritBackgroundColor();
@@ -29,6 +33,20 @@ public class ISCButtonView extends ViewGroup {
         } else {
             this.mAlign = AlignLeft;
         }
+    }
+
+    public int getPosition() {
+        if (this.mAlign == AlignLeft) {
+            return PositionRight;
+        }
+        if (this.mAlign == AlignRight) {
+            return PositionLeft;
+        }
+        return 0;
+    }
+
+    public int getIntrinsicWidth() {
+        return this.mView.getWidth();
     }
 
     protected void inheritBackgroundColor() {
@@ -44,10 +62,10 @@ public class ISCButtonView extends ViewGroup {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
         this.mView.measure(
-                MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
+                MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
         );
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(width, height);
     }
 
     @Override
