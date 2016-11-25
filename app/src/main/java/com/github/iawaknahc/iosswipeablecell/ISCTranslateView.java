@@ -139,9 +139,9 @@ public class ISCTranslateView extends ViewGroup implements Animator.AnimatorList
             mNotifyParentOnSwipe = notifyParent;
             this.cancelSettlingTransition();
             mSettlingAnimator = new AnimatorSet();
-            ObjectAnimator thisAnimator = ObjectAnimator.ofFloat(this, "translationX", -this.getWidth() * 2); // FIXME
+            ObjectAnimator thisAnimator = ObjectAnimator.ofFloat(this, "translationX", -this.getWidth()); // FIXME
             AnimatorSet.Builder builder = mSettlingAnimator.play(thisAnimator);
-            ObjectAnimator contentViewAnimator = ObjectAnimator.ofFloat(this.getContentView(), "translationX", -this.getWidth() * 2); // FIXME
+            ObjectAnimator contentViewAnimator = ObjectAnimator.ofFloat(this.getContentView(), "translationX", -this.getWidth()); // FIXME
             builder.with(contentViewAnimator);
             mSettlingAnimator.setDuration(100);
             mSettlingAnimator.setInterpolator(this.mTimeInterpolator);
