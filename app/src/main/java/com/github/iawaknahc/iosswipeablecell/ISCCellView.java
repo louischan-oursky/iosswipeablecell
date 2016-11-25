@@ -224,26 +224,6 @@ public class ISCCellView<ContentView extends View> extends ViewGroup implements 
     }
     // transition
 
-    // vibration
-    protected void notifyUserForRecognizedSwipeByVibration() {
-        try {
-            Context context = this.getContext();
-            int result = ContextCompat.checkSelfPermission(context, Manifest.permission.VIBRATE);
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-            if (!vibrator.hasVibrator()) {
-                return;
-            }
-            vibrator.vibrate(50);
-        } catch (Exception e) {
-            // ignore vibration
-        }
-    }
-
-    // vibration
-
     void onDidSwipeFromRightToLeft() {
         if (mActionDelegate != null) {
             mActionDelegate.onDidSwipeFromRightToLeft(this);
