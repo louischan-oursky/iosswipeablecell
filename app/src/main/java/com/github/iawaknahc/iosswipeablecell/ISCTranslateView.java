@@ -42,6 +42,8 @@ public class ISCTranslateView extends ViewGroup implements Animator.AnimatorList
     protected final int mGesture;
     protected int mLastInteractiveSwipeProcess;
 
+    private boolean mNotifyParentOnSwipe;
+
     private ArrayList<Float> mChildTranslateX;
 
     public ISCTranslateView(Context context, int gesture) {
@@ -77,7 +79,7 @@ public class ISCTranslateView extends ViewGroup implements Animator.AnimatorList
     public void settleByCurrentSwipeProcess() {
         int swipeProcess = this.getStaticSwipeProcess();
         if (swipeProcess == SwipeProcessStage2) {
-            this.settleToStage2();
+            this.settleToStage2(true);
         } else if (swipeProcess == SwipeProcessStage1) {
             this.settleToStage1();
         } else {
@@ -132,8 +134,9 @@ public class ISCTranslateView extends ViewGroup implements Animator.AnimatorList
         }
     }
 
-    public void settleToStage2() {
+    public void settleToStage2(boolean notifyParent) {
         if (mOngoingSettlingTransition != TransitionSettlingStage2) {
+            mNotifyParentOnSwipe = notifyParent;
             this.cancelSettlingTransition();
             mSettlingAnimator = new AnimatorSet();
             ObjectAnimator thisAnimator = ObjectAnimator.ofFloat(this, "translationX", -this.getWidth() * 2); // FIXME
@@ -344,7 +347,10 @@ public class ISCTranslateView extends ViewGroup implements Animator.AnimatorList
                     child.setTranslationX(0);
                 }
                 this.getContentView().setTranslationX(0);
-                this.getCellView().onDidSwipeFromRightToLeft(); // FIXME
+                if (mNotifyParentOnSwipe) {
+                    mNotifyParentOnSwipe = false;
+                    this.getCellView().onDidSwipeFromRightToLeft(); // FIXME
+                }
             }
             mOngoingSettlingTransition = TransitionNone;
         }

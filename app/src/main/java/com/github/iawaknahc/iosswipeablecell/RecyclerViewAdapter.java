@@ -1,5 +1,6 @@
 package com.github.iawaknahc.iosswipeablecell;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -80,11 +81,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewViewHo
     }
 
     @Override
-    public void onDidSwipeFromRightToLeft(ISCCellView<RecyclerViewCell> cellView) {
-        int adapterPosition = mRecyclerView.getChildAdapterPosition(cellView);
-        if (adapterPosition != RecyclerView.NO_POSITION) {
-            mData.remove(adapterPosition);
-            this.notifyItemRemoved(adapterPosition);
+    public void onActionDone(ISCCellView<RecyclerViewCell> cellView, Bundle eventData) {
+        Log.d(LOG_TAG, "eventData=" + eventData.toString());
+        if (eventData.getInt("index", 0) == 0) {
+            int adapterPosition = mRecyclerView.getChildAdapterPosition(cellView);
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                mData.remove(adapterPosition);
+                this.notifyItemRemoved(adapterPosition);
+            }
         }
     }
 }

@@ -1,10 +1,6 @@
 package com.github.iawaknahc.iosswipeablecell;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Vibrator;
-import android.support.v4.content.ContextCompat;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,7 +12,7 @@ import java.util.ArrayList;
 public class ISCCellView<ContentView extends View> extends ViewGroup implements View.OnClickListener {
 
     public interface ISCCellViewActionDelegate<ContentView extends View> {
-        void onDidSwipeFromRightToLeft(ISCCellView<ContentView> cellView);
+        void onActionDone(ISCCellView<ContentView> cellView, Bundle eventData);
     }
 
     private static final String LOG_TAG = "ISCCellView";
@@ -219,21 +215,35 @@ public class ISCCellView<ContentView extends View> extends ViewGroup implements 
         this.mRightTranslateView.settleToStage0();
     }
 
-    protected void settleToStage2() {
-        this.mRightTranslateView.settleToStage2();
+    protected void settleToStage2(boolean notifyMe) {
+        this.mRightTranslateView.settleToStage2(notifyMe);
     }
     // transition
 
     void onDidSwipeFromRightToLeft() {
         if (mActionDelegate != null) {
-            mActionDelegate.onDidSwipeFromRightToLeft(this);
+            Bundle bundle = new Bundle();
+            bundle.putString("source", "swipe");
+            bundle.putInt("index", 0);
+            bundle.putString("swipe-direction", "right-to-left");
+            mActionDelegate.onActionDone(this, bundle);
         }
     }
 
     // implements OnClickListener
     @Override
     public void onClick(View view) {
-        this.settleToStage2();
+        Bundle bundle = new Bundle();
+        ISCButtonView buttonView = (ISCButtonView) view;
+        if (buttonView.getOrder() == 0) {
+            this.settleToStage2(false);
+        }
+        bundle.putString("source", "press");
+        bundle.putInt("index", buttonView.getOrder());
+        bundle.putString("position", "right");
+        if (mActionDelegate != null) {
+            mActionDelegate.onActionDone(this, bundle);
+        }
     }
     // implements OnClickListener
 }

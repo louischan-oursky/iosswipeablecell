@@ -45,6 +45,10 @@ public class ISCButtonView extends ViewGroup {
         return 0;
     }
 
+    public int getOrder() {
+        return this.mOrder;
+    }
+
     public int getIntrinsicWidth() {
         return this.mView.getWidth();
     }
